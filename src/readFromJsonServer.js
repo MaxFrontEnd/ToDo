@@ -5,7 +5,7 @@ var getDataFromJson = function(URL) {
   return new Promise(function(resolve, reject) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", URL);
-    xhr.onload = function(e) {
+    xhr.onload = function() {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           resolve(xhr.responseText);
@@ -13,7 +13,7 @@ var getDataFromJson = function(URL) {
           reject(xhr.statusText);
         }
       }
-      xhr.onerror = function(e) {
+      xhr.onerror = function() {
         console.log(xhr.statusText);
       };
     };

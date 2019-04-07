@@ -1,16 +1,25 @@
 const URL = "http://localhost:3000/todos";
-import data from "./requests";
-import sendData from "./updateJsonServer";
-import deleteData from "./removeFromList";
+import data from "./readFromJsonServer";
+import sendData from "./addToJsonServer";
+import deleteData from "./removeFromJsonServer";
 
 // Ad a new list item
 function addLi(arrOfElements) {
   var list = document.querySelector(".list");
   arrOfElements.forEach(function(value, index) {
+    // List element
     var element = document.createElement("li");
+    var deleteButton = document.createElement("button");
     element.classList = "li";
     element.id = arrOfElements[index].id;
-    var deleteButton = document.createElement("button");
+    element.innerHTML = arrOfElements[index].title;
+    element.appendChild(deleteButton);
+    element.onclick = function() {
+      element.classList.contains("li-done")
+        ? element.classList.remove("li-done")
+        : (element.classList = "li-done");
+    };
+    //Button element
     deleteButton.innerHTML = "Delete";
     deleteButton.onclick = function() {
       console.log(this.parentNode.id);
@@ -19,8 +28,7 @@ function addLi(arrOfElements) {
       li.remove();
     };
     deleteButton.classList = "list-button";
-    element.innerHTML = arrOfElements[index].title;
-    element.appendChild(deleteButton);
+
     list.appendChild(element);
   });
 }
@@ -30,6 +38,7 @@ function removeFromList(id) {
   var combineURL = URL + "/" + id;
   deleteData(combineURL);
 }
+
 //Get data from server and display it
 function displayTasks(data) {
   data
@@ -42,9 +51,9 @@ function displayTasks(data) {
     });
 }
 
-function checkToDo() {}
 document.addEventListener("DOMContentLoaded", displayTasks(data));
 
+//Add new toDo button
 var addButton = document.querySelector(".button");
 addButton.onclick = function ClickOnButton() {
   var inputText = document.querySelector(".input").value;

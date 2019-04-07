@@ -104,7 +104,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   // Override the current require with this new one
   return newRequire;
-})({"requests.js":[function(require,module,exports) {
+})({"readFromJsonServer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -119,7 +119,7 @@ var getDataFromJson = function getDataFromJson(URL) {
     var xhr = new XMLHttpRequest();
     xhr.open("GET", URL);
 
-    xhr.onload = function (e) {
+    xhr.onload = function () {
       if (xhr.readyState === 4) {
         if (xhr.status === 200) {
           resolve(xhr.responseText);
@@ -128,7 +128,7 @@ var getDataFromJson = function getDataFromJson(URL) {
         }
       }
 
-      xhr.onerror = function (e) {
+      xhr.onerror = function () {
         console.log(xhr.statusText);
       };
     };
@@ -140,7 +140,7 @@ var getDataFromJson = function getDataFromJson(URL) {
 var data = getDataFromJson(URL);
 var _default = data;
 exports.default = _default;
-},{}],"updateJsonServer.js":[function(require,module,exports) {
+},{}],"addToJsonServer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -176,7 +176,7 @@ var setDataToJson = function setDataToJson(URL, data) {
 
 var _default = setDataToJson;
 exports.default = _default;
-},{}],"removeFromList.js":[function(require,module,exports) {
+},{}],"removeFromJsonServer.js":[function(require,module,exports) {
 "use strict";
 
 Object.defineProperty(exports, "__esModule", {
@@ -214,11 +214,11 @@ exports.default = _default;
 },{}],"App.js":[function(require,module,exports) {
 "use strict";
 
-var _requests = _interopRequireDefault(require("./requests"));
+var _readFromJsonServer = _interopRequireDefault(require("./readFromJsonServer"));
 
-var _updateJsonServer = _interopRequireDefault(require("./updateJsonServer"));
+var _addToJsonServer = _interopRequireDefault(require("./addToJsonServer"));
 
-var _removeFromList = _interopRequireDefault(require("./removeFromList"));
+var _removeFromJsonServer = _interopRequireDefault(require("./removeFromJsonServer"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -228,10 +228,19 @@ var URL = "http://localhost:3000/todos";
 function addLi(arrOfElements) {
   var list = document.querySelector(".list");
   arrOfElements.forEach(function (value, index) {
+    // List element
     var element = document.createElement("li");
+    var deleteButton = document.createElement("button");
     element.classList = "li";
     element.id = arrOfElements[index].id;
-    var deleteButton = document.createElement("button");
+    element.innerHTML = arrOfElements[index].title;
+    element.appendChild(deleteButton);
+
+    element.onclick = function () {
+      element.classList.contains("li-done") ? element.classList.remove("li-done") : element.classList = "li-done";
+    }; //Button element
+
+
     deleteButton.innerHTML = "Delete";
 
     deleteButton.onclick = function () {
@@ -242,8 +251,6 @@ function addLi(arrOfElements) {
     };
 
     deleteButton.classList = "list-button";
-    element.innerHTML = arrOfElements[index].title;
-    element.appendChild(deleteButton);
     list.appendChild(element);
   });
 } // Remove from li from list
@@ -251,7 +258,7 @@ function addLi(arrOfElements) {
 
 function removeFromList(id) {
   var combineURL = URL + "/" + id;
-  (0, _removeFromList.default)(combineURL);
+  (0, _removeFromJsonServer.default)(combineURL);
 } //Get data from server and display it
 
 
@@ -263,9 +270,8 @@ function displayTasks(data) {
   });
 }
 
-function checkToDo() {}
+document.addEventListener("DOMContentLoaded", displayTasks(_readFromJsonServer.default)); //Add new toDo button
 
-document.addEventListener("DOMContentLoaded", displayTasks(_requests.default));
 var addButton = document.querySelector(".button");
 
 addButton.onclick = function ClickOnButton() {
@@ -274,13 +280,13 @@ addButton.onclick = function ClickOnButton() {
     title: inputText,
     isDone: false
   };
-  (0, _updateJsonServer.default)(URL, obj).then(function (text) {
+  (0, _addToJsonServer.default)(URL, obj).then(function (text) {
     console.log(text); //reload a page after new element li was added
 
     document.location.reload(true);
   });
 };
-},{"./requests":"requests.js","./updateJsonServer":"updateJsonServer.js","./removeFromList":"removeFromList.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./readFromJsonServer":"readFromJsonServer.js","./addToJsonServer":"addToJsonServer.js","./removeFromJsonServer":"removeFromJsonServer.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

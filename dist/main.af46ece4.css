@@ -33,6 +33,7 @@ b {
 
 .list {
   font-size: 25px;
+  color: grey;
 }
 
 .button {
@@ -56,5 +57,11 @@ b {
   cursor: pointer;
 }
 li:hover {
-  background-color: grey;
+  color: black;
+  cursor: pointer;
+}
+
+.li-done {
+  text-decoration: line-through;
+  cursor: pointer;
 }
