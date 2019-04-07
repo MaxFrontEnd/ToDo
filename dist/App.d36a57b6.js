@@ -140,23 +140,147 @@ var getDataFromJson = function getDataFromJson(URL) {
 var data = getDataFromJson(URL);
 var _default = data;
 exports.default = _default;
+},{}],"updateJsonServer.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var setDataToJson = function setDataToJson(URL, data) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", URL);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 201) {
+        console.log(XMLHttpRequest.DONE);
+        console.log(xhr.status);
+        resolve("new item added");
+      } else {
+        xhr.onerror = function (err) {
+          reject(err);
+        };
+      }
+
+      xhr.onerror = function (err) {
+        console.log(err);
+      };
+    };
+
+    xhr.send(JSON.stringify(data));
+  });
+};
+
+var _default = setDataToJson;
+exports.default = _default;
+},{}],"removeFromList.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+
+var removeDatafromJson = function removeDatafromJson(URL) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("DELETE", URL);
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 201) {
+        console.log(XMLHttpRequest.DONE);
+        console.log(xhr.status);
+        resolve("item deleted");
+      } else {
+        xhr.onerror = function (err) {
+          reject(err);
+        };
+      }
+
+      xhr.onerror = function (err) {
+        console.log(err);
+      };
+    };
+
+    xhr.send();
+  });
+};
+
+var _default = removeDatafromJson;
+exports.default = _default;
 },{}],"App.js":[function(require,module,exports) {
 "use strict";
 
 var _requests = _interopRequireDefault(require("./requests"));
 
+var _updateJsonServer = _interopRequireDefault(require("./updateJsonServer"));
+
+var _removeFromList = _interopRequireDefault(require("./removeFromList"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-_requests.default.then(function (text) {
-  console.log(text);
-}).catch(function (error) {
-  console.log(error);
-});
+var URL = "http://localhost:3000/todos";
 
-function addTask() {
+// Ad a new list item
+function addLi(arrOfElements) {
   var list = document.querySelector(".list");
+  arrOfElements.forEach(function (value, index) {
+    var element = document.createElement("li");
+    element.classList = "li";
+    element.id = arrOfElements[index].id;
+    var deleteButton = document.createElement("button");
+    deleteButton.innerHTML = "Delete";
+
+    deleteButton.onclick = function () {
+      console.log(this.parentNode.id);
+      removeFromList(this.parentNode.id);
+      var li = this.parentNode;
+      li.remove();
+    };
+
+    deleteButton.classList = "list-button";
+    element.innerHTML = arrOfElements[index].title;
+    element.appendChild(deleteButton);
+    list.appendChild(element);
+  });
+} // Remove from li from list
+
+
+function removeFromList(id) {
+  var combineURL = URL + "/" + id;
+  (0, _removeFromList.default)(combineURL);
+} //Get data from server and display it
+
+
+function displayTasks(data) {
+  data.then(function (fullResponse) {
+    addLi(JSON.parse(fullResponse)); //console.log(resp);
+  }).catch(function (error) {
+    console.log(error);
+  });
 }
-},{"./requests":"requests.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+function checkToDo() {}
+
+document.addEventListener("DOMContentLoaded", displayTasks(_requests.default));
+var addButton = document.querySelector(".button");
+
+addButton.onclick = function ClickOnButton() {
+  var inputText = document.querySelector(".input").value;
+  var obj = {
+    title: inputText,
+    isDone: false
+  };
+  (0, _updateJsonServer.default)(URL, obj).then(function (text) {
+    console.log(text); //reload a page after new element li was added
+
+    document.location.reload(true);
+  });
+};
+},{"./requests":"requests.js","./updateJsonServer":"updateJsonServer.js","./removeFromList":"removeFromList.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;

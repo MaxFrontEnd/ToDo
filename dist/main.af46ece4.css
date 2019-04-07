@@ -6,10 +6,55 @@ body {
 }
 
 .container {
+  margin: auto;
+  width: 800px;
   display: flex;
   justify-content: center;
+  flex-direction: column;
 }
 
 b {
   color: #00ccff;
+}
+
+.input-wrap {
+  width: 70%;
+  margin: auto;
+}
+
+.input {
+  border: 1px solid grey;
+  box-sizing: border-box;
+  margin: 10px;
+  width: 75%;
+  height: 40px;
+  font-size: 20px;
+}
+
+.list {
+  font-size: 25px;
+}
+
+.button {
+  border: none;
+  background-color: #00ccff;
+  box-sizing: border-box;
+  height: 40px;
+  width: 19%;
+}
+
+.list-button {
+  float: right;
+  border: none;
+  background-color: #00ccff;
+  box-sizing: border-box;
+  cursor: pointer;
+  height: 28px;
+}
+
+.li {
+  cursor: pointer;
+}
+li:hover {
+  background-color: grey;
 }
