@@ -1,11 +1,6 @@
 {
   "todos": [
     {
-      "title": "delet element from list",
-      "isDone": false,
-      "id": 12
-    },
-    {
       "title": "Have a good day",
       "isDone": false,
       "id": 14
@@ -14,6 +9,26 @@
       "title": "practice",
       "isDone": false,
       "id": 15
+    },
+    {
+      "title": "To do practice",
+      "isDone": false,
+      "id": 16
+    },
+    {
+      "title": "ewr",
+      "isDone": false,
+      "id": 17
+    },
+    {
+      "title": "re",
+      "isDone": false,
+      "id": 18
+    },
+    {
+      "title": "To break the habbit",
+      "isDone": false,
+      "id": 19
     }
   ]
 }

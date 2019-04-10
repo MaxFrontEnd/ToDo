@@ -224,34 +224,46 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var URL = "http://localhost:3000/todos";
 
-// Ad a new list item
+var Li = function Li(id, title) {
+  this.id = id;
+  this.title = title;
+  var element = document.createElement("li");
+  element.id = this.id;
+  element.innerHTML = this.title;
+  element.classList = "li";
+
+  element.onclick = function () {
+    element.classList.contains("li-done") ? element.classList.remove("li-done") : element.classList = "li-done";
+  }; // button add to every list
+
+
+  var deleteButton = document.createElement("button");
+  deleteButton.innerHTML = "Delete";
+
+  deleteButton.onclick = function () {
+    console.log(this.parentNode.id);
+    removeFromList(this.parentNode.id);
+    var list = this.parentNode;
+    list.remove();
+  };
+
+  deleteButton.classList = "list-button";
+  element.appendChild(deleteButton);
+  return element;
+};
+
+Li.prototype.addButton = function () {}; // Ad a new list item
+
+
 function addLi(arrOfElements) {
-  var list = document.querySelector(".list");
+  var ol = document.querySelector(".list");
   arrOfElements.forEach(function (value, index) {
     // List element
-    var element = document.createElement("li");
-    var deleteButton = document.createElement("button");
-    element.classList = "li";
-    element.id = arrOfElements[index].id;
-    element.innerHTML = arrOfElements[index].title;
-    element.appendChild(deleteButton);
+    var id = arrOfElements[index].id;
+    var title = arrOfElements[index].title;
+    var li = new Li(id, title); //console.log(li);
 
-    element.onclick = function () {
-      element.classList.contains("li-done") ? element.classList.remove("li-done") : element.classList = "li-done";
-    }; //Button element
-
-
-    deleteButton.innerHTML = "Delete";
-
-    deleteButton.onclick = function () {
-      console.log(this.parentNode.id);
-      removeFromList(this.parentNode.id);
-      var li = this.parentNode;
-      li.remove();
-    };
-
-    deleteButton.classList = "list-button";
-    list.appendChild(element);
+    ol.appendChild(li);
   });
 } // Remove from li from list
 
@@ -280,11 +292,16 @@ addButton.onclick = function ClickOnButton() {
     title: inputText,
     isDone: false
   };
-  (0, _addToJsonServer.default)(URL, obj).then(function (text) {
-    console.log(text); //reload a page after new element li was added
 
-    document.location.reload(true);
-  });
+  if (inputText) {
+    (0, _addToJsonServer.default)(URL, obj).then(function (text) {
+      console.log(text); //reload a page after new element li was added
+
+      document.location.reload(true);
+    });
+  } else {
+    console.log("You need to enter something");
+  }
 };
 },{"./readFromJsonServer":"readFromJsonServer.js","./addToJsonServer":"addToJsonServer.js","./removeFromJsonServer":"removeFromJsonServer.js"}],"../node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
