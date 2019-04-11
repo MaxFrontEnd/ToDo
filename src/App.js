@@ -35,8 +35,7 @@ function addLi(arrOfElements) {
   var ol = document.querySelector(".list");
   arrOfElements.forEach(function(value, index) {
     // List element
-    var id = arrOfElements[index].id;
-    var title = arrOfElements[index].title;
+    var [id, title] = [arrOfElements[index].id, arrOfElements[index].title];
     var li = new Li(id, title);
     //console.log(li);
     ol.appendChild(li);

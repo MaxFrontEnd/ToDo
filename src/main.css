@@ -52,6 +52,9 @@ b {
   cursor: pointer;
   height: 28px;
 }
+.list-button:hover {
+  background-color: azure;
+}
 
 .li {
   cursor: pointer;
