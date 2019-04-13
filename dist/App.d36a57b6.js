@@ -225,20 +225,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var URL = "http://localhost:3000/todos";
 
 var Li = function Li(id, title) {
-  this.id = id;
-  this.title = title;
+  var _id = id;
+  this.id = _id === void 0 ? id : _id;
+  var _title = title;
+  this.title = _title === void 0 ? title : _title;
+  var blokForElement = document.createElement("div");
+  blokForElement.className = "block-for-element";
   var element = document.createElement("li");
-  element.id = this.id;
+  blokForElement.id = this.id;
   element.innerHTML = this.title;
   element.classList = "li";
 
   element.onclick = function () {
-    element.classList.contains("li-done") ? element.classList.remove("li-done") : element.classList = "li-done";
+    element.classList.contains("li-done") ? element.classList.replace("li-done", "li") : element.classList.replace("li", "li-done");
   }; // button add to every list
 
 
   var deleteButton = document.createElement("button");
-  deleteButton.innerHTML = "Delete";
+  deleteButton.innerHTML = "Удалить";
 
   deleteButton.onclick = function () {
     console.log(this.parentNode.id);
@@ -248,8 +252,9 @@ var Li = function Li(id, title) {
   };
 
   deleteButton.classList = "list-button";
-  element.appendChild(deleteButton);
-  return element;
+  blokForElement.appendChild(element);
+  blokForElement.appendChild(deleteButton);
+  return blokForElement;
 };
 
 Li.prototype.addButton = function () {}; // Ad a new list item
@@ -258,7 +263,7 @@ Li.prototype.addButton = function () {}; // Ad a new list item
 function addLi(arrOfElements) {
   var ol = document.querySelector(".list");
   arrOfElements.forEach(function (value, index) {
-    // List element
+    // List element destructurning
     var _ref = [arrOfElements[index].id, arrOfElements[index].title],
         id = _ref[0],
         title = _ref[1];

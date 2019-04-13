@@ -4,20 +4,21 @@ import sendData from "./addToJsonServer";
 import deleteData from "./removeFromJsonServer";
 
 var Li = function(id, title) {
-  this.id = id;
-  this.title = title;
+  [this.id = id, this.title = title] = [id, title];
+  var blokForElement = document.createElement("div");
+  blokForElement.className = "block-for-element";
   var element = document.createElement("li");
-  element.id = this.id;
+  blokForElement.id = this.id;
   element.innerHTML = this.title;
   element.classList = "li";
   element.onclick = function() {
     element.classList.contains("li-done")
-      ? element.classList.remove("li-done")
-      : (element.classList = "li-done");
+      ? element.classList.replace("li-done", "li")
+      : element.classList.replace("li", "li-done");
   };
   // button add to every list
   var deleteButton = document.createElement("button");
-  deleteButton.innerHTML = "Delete";
+  deleteButton.innerHTML = "Удалить";
   deleteButton.onclick = function() {
     console.log(this.parentNode.id);
     removeFromList(this.parentNode.id);
@@ -25,8 +26,9 @@ var Li = function(id, title) {
     list.remove();
   };
   deleteButton.classList = "list-button";
-  element.appendChild(deleteButton);
-  return element;
+  blokForElement.appendChild(element);
+  blokForElement.appendChild(deleteButton);
+  return blokForElement;
 };
 
 Li.prototype.addButton = function() {};
@@ -34,7 +36,7 @@ Li.prototype.addButton = function() {};
 function addLi(arrOfElements) {
   var ol = document.querySelector(".list");
   arrOfElements.forEach(function(value, index) {
-    // List element
+    // List element destructurning
     var [id, title] = [arrOfElements[index].id, arrOfElements[index].title];
     var li = new Li(id, title);
     //console.log(li);

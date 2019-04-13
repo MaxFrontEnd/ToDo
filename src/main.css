@@ -32,39 +32,54 @@ b {
 }
 
 .list {
-  font-size: 25px;
+  font-size: 20px;
   color: grey;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 .button {
   border: none;
-  background-color: #00ccff;
+  background-color: #d6d9da;
   box-sizing: border-box;
   height: 40px;
   width: 19%;
+  border-radius: 2px;
+}
+.button:hover {
+  background-color: rgb(48, 182, 245);
+  cursor: pointer;
 }
 
 .list-button {
   float: right;
   border: none;
-  background-color: #00ccff;
+  background-color: #d6d9da;
   box-sizing: border-box;
   cursor: pointer;
-  height: 28px;
+  height: 20px;
 }
 .list-button:hover {
-  background-color: azure;
+  background-color: rgb(48, 182, 245);
 }
 
 .li {
   cursor: pointer;
+  margin-top: 5px;
 }
 li:hover {
-  color: black;
+  color: rgb(48, 182, 245);
   cursor: pointer;
 }
 
 .li-done {
   text-decoration: line-through;
   cursor: pointer;
+  margin-top: 5px;
+}
+
+.block-for-element {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  border-bottom: 0.5px solid darkolivegreen;
 }
