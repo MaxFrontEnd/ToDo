@@ -2,7 +2,9 @@ body {
   background-color: azure;
 }
 .root {
+  margin-left: 20px;
   font-size: 40px;
+  font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 }
 
 .container {
@@ -14,7 +16,7 @@ body {
 }
 
 b {
-  color: #00ccff;
+  color: rgb(48, 182, 245);
 }
 
 .input-wrap {
